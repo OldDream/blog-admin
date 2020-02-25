@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Card, Input, Icon, Spin } from 'antd';
-import './login.scss'
+import './login.scss';
 
 function Login() {
   const [userName, setUserName] = useState('');
@@ -8,27 +8,30 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   function handleUsernameInput(e: any) {
-    setUserName(e.target.value)
+    setUserName(e.target.value);
     console.log(e.target.value);
   }
   function handlePasswordInput(e: any) {
-    setPassword(e.target.value)
+    setPassword(e.target.value);
     console.log(e.target.value);
   }
   function checkLogin(e: any) {
-    console.log({userName,password});
-    setIsLoading(true)
+    console.log({ userName, password });
+    setIsLoading(true);
     setTimeout(() => {
-    setIsLoading(false)
+      setIsLoading(false);
     }, 3000);
   }
 
   return (
     <div className="login-div">
       <Spin tip="Loading..." spinning={isLoading} wrapperClassName="spin-div">
-        <Card title="HYN's Blog Admin Page" bordered={true} className="login-card">
+        <Card
+          title="HYN's Blog Admin Page"
+          bordered={true}
+          className="login-card"
+        >
           <Input
-            // onChange={(e)=> {console.log(e.target.value);}}
             onChange={handleUsernameInput}
             id="userName"
             size="large"
@@ -46,7 +49,8 @@ function Login() {
             placeholder="请输入密码"
             prefix={<Icon type="key" style={{ color: 'rgba(0,0,0,.25)' }} />}
           />
-          <br /><br />
+          <br />
+          <br />
           <Button type="primary" size="large" block onClick={checkLogin}>
             提交
           </Button>
