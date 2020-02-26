@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import './style.scss'
+import React, { useState } from 'react';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Route } from 'react-router-dom';
+import AddArticle from '../AddArticle';
+import './style.scss';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 function SiderDemo() {
@@ -13,10 +15,10 @@ function SiderDemo() {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1">
             <Icon type="pie-chart" />
             <span>数据总览</span>
@@ -44,17 +46,16 @@ function SiderDemo() {
         </Menu>
       </Sider>
       <Layout>
-        <Header style={{ background: "#fff", padding: 0 }} />
-        <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
+        <Content style={{ margin: '0 16px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
-          <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-            Bill is a cat.
+          <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <Route path="/index" exact component={AddArticle} />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
+        <Footer style={{ textAlign: 'center' }}>
           Ant Design ©2018 Created by Ant UED
         </Footer>
       </Layout>
