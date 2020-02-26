@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import marked from 'marked';
 import { Row, Col, Input, Select, Button, DatePicker } from 'antd';
 import './addArticle.css';
+import axios from '../../utils/axios';
 
 const { Option } = Select,
   { TextArea } = Input;
 
-function AddArticle() {
+function AddArticle(props: any) {
   const [articleId, setArticleId] = useState(0); // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
   const [articleTitle, setArticleTitle] = useState(''); //文章标题
   const [articleContent, setArticleContent] = useState(''); //markdown的编辑内容
@@ -15,8 +16,8 @@ function AddArticle() {
   const [descriptionHtml, setDdescriptionHtml] = useState('等待编辑'); //简介的html内容
   const [showDate, setShowDate] = useState(); //发布日期
   const [updateDate, setUpdateDate] = useState(); //修改日志的日期
-  const [typeInfo, setTypeInfo] = useState([]); // 文章类别信息，后台获取
-  const [selectedType, setSelectType] = useState(1); //选择的文章类别
+  const [typeInfo, setTypeInfo] = useState([{id: -1, typeName:'请选择'}]); // 文章类别信息，后台获取
+  const [selectedType, setSelectType] = useState(null); //选择的文章类别
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -42,6 +43,22 @@ function AddArticle() {
     setDdescriptionHtml(html);
   };
 
+  const getTypeInfo = () => {
+    axios.get('/admin/getTypeInfo').then(res => {
+      console.log(res.data);
+      if (res.data.success === false) {
+        sessionStorage.removeItem('openId');
+        props.history.push('/');
+      } else {
+        setTypeInfo(res.data.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getTypeInfo();
+  }, []);
+
   return (
     <div>
       <Row gutter={5}>
@@ -53,9 +70,18 @@ function AddArticle() {
             </Col>
             <Col span={4}>
               &nbsp;
-              <Select defaultValue="1" size="large" style={{ width: '96%' }}>
-                <Option value="1">test1</Option>
-                <Option value="2">test2</Option>
+              <Select
+                defaultValue={selectedType}
+                size="large"
+                style={{ width: '96%' }}
+              >
+                {typeInfo.map((item, index) => {
+                  return (
+                    <Option key={index} value={item.id}>
+                      {item.typeName}
+                    </Option>
+                  );
+                })}
               </Select>
             </Col>
           </Row>

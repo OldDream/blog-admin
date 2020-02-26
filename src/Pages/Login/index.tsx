@@ -28,7 +28,7 @@ function Login(props: any) {
       return false;
     }
     axios
-      .post('/admin/ckeckLogin', {
+      .post('/admin/checkLogin', {
         userName,
         password
       })
@@ -36,7 +36,7 @@ function Login(props: any) {
         console.log(res);
         let data = res.data;
         setIsLoading(false);
-        if (data.message === '登陆成功') {
+        if (data.success === true) {
           sessionStorage.setItem('openId', data.openId);
           props.history.push('/index');
         } else {
