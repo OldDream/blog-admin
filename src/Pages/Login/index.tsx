@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Card, Input, Icon, Spin } from 'antd';
+import { Button, Card, Input, Icon, Spin, message } from 'antd';
+import axios from '../../utils/axios';
 import './login.scss';
 
-function Login() {
+function Login(props: any) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -16,11 +17,37 @@ function Login() {
     console.log(e.target.value);
   }
   function checkLogin(e: any) {
-    console.log({ userName, password });
     setIsLoading(true);
-    setTimeout(() => {
+    if (!userName) {
+      message.error('用户名不能为空！');
       setIsLoading(false);
-    }, 3000);
+      return false;
+    } else if (!password) {
+      message.error('密码不能为空！');
+      setIsLoading(false);
+      return false;
+    }
+    axios
+      .post('/admin/ckeckLogin', {
+        userName,
+        password
+      })
+      .then(res => {
+        console.log(res);
+        let data = res.data;
+        setIsLoading(false);
+        if (data.message === '登陆成功') {
+          sessionStorage.setItem('openId', data.openId);
+          props.history.push('/index');
+        } else {
+          message.error('用户名或密码错误！');
+        }
+      })
+      .catch(err => {
+        console.log('error!');
+        console.log(err);
+        setIsLoading(false);
+      });
   }
 
   return (
