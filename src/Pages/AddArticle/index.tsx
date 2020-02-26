@@ -43,19 +43,21 @@ function AddArticle(props: any) {
     setDdescriptionHtml(html);
   };
 
-  const getTypeInfo = () => {
-    axios.get('/admin/getTypeInfo').then(res => {
-      console.log(res.data);
-      if (res.data.success === false) {
-        sessionStorage.removeItem('openId');
-        props.history.push('/');
-      } else {
-        setTypeInfo(res.data.data);
-      }
-    });
-  };
+  
 
   useEffect(() => {
+    const getTypeInfo = () => {
+      axios.get('/admin/getTypeInfo').then(res => {
+        console.log(res.data);
+        if (res.data.success === false) {
+          sessionStorage.removeItem('openId');
+          props.history.push('/');
+        } else {
+          setTypeInfo(res.data.data);
+        }
+      });
+    };
+    
     getTypeInfo();
   }, []);
 
