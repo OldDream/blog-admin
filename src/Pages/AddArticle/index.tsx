@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import marked from 'marked';
-import moment from 'moment'
+import moment from 'moment';
 import { Row, Col, Input, Select, Button, DatePicker, message } from 'antd';
 import './addArticle.css';
 import axios from '../../utils/axios';
@@ -69,42 +69,38 @@ function AddArticle(props: any) {
     }
 
     interface TempData {
-      type_id: number,
-      title: string,
-      introduction: string,
-      content: string,
-      created_time: number,
-      view_count?:number,
-      id?:number
+      type_id: number;
+      title: string;
+      introduction: string;
+      content: string;
+      created_time: number;
+      view_count?: number;
+      id?: number;
     }
     let temp: TempData = {
-      type_id: selectedType as unknown as number,
+      type_id: (selectedType as unknown) as number,
       title: articleTitle,
       introduction: description,
       content: articleContent,
       created_time: showDate.unix()
-    }
-    if (articleId === 0) {
-      temp.view_count = 0
-      axios
-        .post('/admin/addOrEditArticle', temp)
-        .then(res => {
-          console.log(res);
-          if(res.data.success) {
-            message.success('保存成功！');
-            setArticleId(res.data.data.id)
-          }
-        });
-    } else {
-      temp.id = articleId
-      axios
-        .post('/admin/addOrEditArticle', temp)
-        .then(res => {
-          console.log(res);
-          if(res.data.success) {
-            message.success('草稿成功！');
-          }
-        });
+    };
+    if (articleId === 0) { // 新增文章
+      temp.view_count = 0;
+      axios.post('/admin/addOrEditArticle', temp).then(res => {
+        console.log(res);
+        if (res.data.success) {
+          message.success('添加成功！');
+          setArticleId(res.data.data.id);
+        }
+      });
+    } else { // 编辑文章
+      temp.id = articleId;
+      axios.post('/admin/addOrEditArticle', temp).then(res => {
+        console.log(res);
+        if (res.data.success) {
+          message.success('编辑成功！');
+        }
+      });
     }
   };
 
