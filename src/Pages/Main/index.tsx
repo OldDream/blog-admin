@@ -8,7 +8,7 @@ export default function Main() {
   return (
     <Router>
       <Route path="/" exact component={Login} />
-      <Route path="/index/" exact component={FramePage} />
+      <Route path="/index/" component={FramePage} />
     </Router>
   );
 }
