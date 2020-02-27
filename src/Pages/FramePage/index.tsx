@@ -18,21 +18,21 @@ function SiderDemo(props: any) {
   };
 
   const openSub = (key: string) => {
-    // const findSub: { [index: string]: string } = {
-    //   '/index/list': 'sub1',
-    //   '/index/add': 'sub1'
-    // };
-    const dic: Map<string, string> = new Map([
-      ['/index/list', 'sub1'],
-      ['/index/add', 'sub1']
-    ]);
-    // let subKey: string[] = [findSub[key]];
-    let subKey: string[] = [dic.get(key) as string];
+    const findSub: { [index: string]: string } = {
+      '/index/list': 'sub1',
+      '/index/add': 'sub1'
+    };
+    // const dic: Map<string, string> = new Map([
+    //   ['/index/list', 'sub1'],
+    //   ['/index/add', 'sub1']
+    // ]);
+    let subKey: string[] = [findSub[key]];
+    // let subKey: string[] = [dic.get(key) as string];
     setOpenKeys(subKey);
   };
 
   useEffect(() => {
-    console.log(66666);
+    console.log('useEffect in frame-page');
     console.log(props);
     setSelectedKeys([props.location.pathname]);
     openSub(props.location.pathname);
