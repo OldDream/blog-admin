@@ -22,16 +22,24 @@ function SiderDemo(props: any) {
     setCollapsed(collapsed);
   };
 
+  // 初始化页面时展开二级菜单
   const openSub = (key: string) => {
-    const findSub: { [index: string]: string } = {
-      '/index/list': 'sub1',
-      '/index/add': 'sub1'
-    };
-    // const dic: Map<string, string> = new Map([
-    //   ['/index/list', 'sub1'],
-    //   ['/index/add', 'sub1']
-    // ]);
-    let subKey: string[] = [findSub[key]];
+    function findSub(key: string): string {
+      console.log('findSub');
+      switch (key) {
+        case '/index/list':
+          return 'sub1';
+        case '/index/add':
+          return 'sub1';
+        default:
+          const index = key.lastIndexOf('/');
+          const newKey = key.slice(0, index);
+          return findSub(newKey);
+      }
+    }
+
+    let subKey: string[] = [findSub(key)];
+    console.log(subKey);
     // let subKey: string[] = [dic.get(key) as string];
     setOpenKeys(subKey);
   };
@@ -41,7 +49,7 @@ function SiderDemo(props: any) {
     console.log(props);
     setSelectedKeys([props.location.pathname]);
     openSub(props.location.pathname);
-  }, []);
+  }, [props]);
 
   const handleMenuClick = (key: string) => {
     console.log(key);

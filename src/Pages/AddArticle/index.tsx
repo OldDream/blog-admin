@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Row, Col, Input, Select, Button, DatePicker, message } from 'antd';
 import './addArticle.css';
 import axios from '../../utils/axios';
+import queryString from 'query-string';
 
 const { Option } = Select,
   { TextArea } = Input;
@@ -122,7 +123,7 @@ function AddArticle(props: any) {
     getTypeInfo();
 
     // 获取文章并填充
-    const getArticleById = (id: number) => {
+    const getArticleById = (id: any) => {
       axios.get('/admin/getArticleById/' + id).then(res => {
         console.log(res.data.data);
         const article = res.data.data
@@ -133,14 +134,16 @@ function AddArticle(props: any) {
           setDescription(article.introduction)
           setSelectType(article.type_id)
           setShowDate(moment.unix(article.created_time))
+          changeContent({target:{value:article.content}})
+          changeDescription({target:{value:article.introduction}})
         }
       })
     }
 
     // 编辑文章
-    console.log(props.match.params.id);
-    if (props.match.params.id) {
-      getArticleById(props.match.params.id)
+    if (props.location.search) {
+      const parsed = queryString.parse(props.location.search);
+      getArticleById(parsed.id)
     }
 
   }, []);

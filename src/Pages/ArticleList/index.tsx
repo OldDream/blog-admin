@@ -45,7 +45,7 @@ function ArticleList(props: any) {
   };
 
   const gotoEdit = (id: number) => {
-    props.history.push('/index/add/' + id);
+    props.history.push('/index/add?id=' + id);
   };
 
   useEffect(() => {
