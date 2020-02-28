@@ -32,9 +32,9 @@ function ArticleList(props: any) {
           console.log(res);
           if (res.data.success) {
             message.success('删除成功！');
-            const tempList= [...list]
-            tempList.splice(index, 1)
-            setList(tempList)
+            const tempList = [...list];
+            tempList.splice(index, 1);
+            setList(tempList);
           }
         });
       },
@@ -44,10 +44,14 @@ function ArticleList(props: any) {
     });
   };
 
+  const gotoEdit = (id: number) => {
+    props.history.push('/index/add/' + id);
+  };
+
   useEffect(() => {
     console.log('useEffect in ArticleList');
     getList();
-  }, [props]);
+  }, []);
 
   // useEffect(() => {
   //   console.log('list change in ArticleList');
@@ -90,7 +94,15 @@ function ArticleList(props: any) {
               <Col span={3}>{item.created_time}</Col>
               <Col span={3}>{item.view_count}</Col>
               <Col span={4}>
-                <Button type="primary">修改</Button>&nbsp;
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    gotoEdit(item.id);
+                  }}
+                >
+                  修改
+                </Button>
+                &nbsp;
                 <Button
                   type="danger"
                   onClick={() => {

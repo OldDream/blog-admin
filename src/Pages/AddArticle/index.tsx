@@ -107,6 +107,7 @@ function AddArticle(props: any) {
   // 保存草稿
 
   useEffect(() => {
+    // 获取分类
     const getTypeInfo = () => {
       axios.get('/admin/getTypeInfo').then(res => {
         console.log(res.data);
@@ -118,9 +119,31 @@ function AddArticle(props: any) {
         }
       });
     };
-
     getTypeInfo();
-  }, [props]);
+
+    // 获取文章并填充
+    const getArticleById = (id: number) => {
+      axios.get('/admin/getArticleById/' + id).then(res => {
+        console.log(res.data.data);
+        const article = res.data.data
+        if(res.data.success) {
+          setArticleId(article.id)
+          setArticleTitle(article.title)
+          setArticleContent(article.content)
+          setDescription(article.introduction)
+          setSelectType(article.type_id)
+          setShowDate(moment.unix(article.created_time))
+        }
+      })
+    }
+
+    // 编辑文章
+    console.log(props.match.params.id);
+    if (props.match.params.id) {
+      getArticleById(props.match.params.id)
+    }
+
+  }, []);
 
   return (
     <div>
@@ -206,7 +229,7 @@ function AddArticle(props: any) {
             <Col span={24}>
               <div className="date-select-div">
                 <DatePicker
-                  // value={showDate}
+                  value={showDate}
                   onChange={(date: any, dateString: any) => {
                     setShowDate(date);
                   }}

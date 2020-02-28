@@ -41,9 +41,11 @@ function SiderDemo(props: any) {
     console.log(props);
     setSelectedKeys([props.location.pathname]);
     openSub(props.location.pathname);
-  }, [props]);
+  }, []);
 
   const handleMenuClick = (key: string) => {
+    console.log(key);
+    setSelectedKeys([key]);
     switch (key) {
       case '/index/list':
         props.history.push(key);
@@ -70,7 +72,6 @@ function SiderDemo(props: any) {
             handleMenuClick(key);
           }}
           theme="dark"
-          defaultSelectedKeys={['1']}
           mode="inline"
         >
           <Menu.Item key="1">
@@ -104,6 +105,7 @@ function SiderDemo(props: any) {
           <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
             <Route path="/index" exact component={AddArticle} />
             <Route path="/index/add" exact component={AddArticle} />
+            <Route path="/index/add/:id" exact component={AddArticle} />
             <Route path="/index/list" component={ArticleList} />
           </div>
         </Content>
