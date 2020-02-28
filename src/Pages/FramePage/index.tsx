@@ -27,6 +27,8 @@ function SiderDemo(props: any) {
     function findSub(key: string): string {
       console.log('findSub');
       switch (key) {
+        case '/index':
+          return 'sub1';
         case '/index/list':
           return 'sub1';
         case '/index/add':
