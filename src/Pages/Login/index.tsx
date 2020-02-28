@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Card, Input, Icon, Spin, message } from 'antd';
+import { Button, Card, Input, Spin, message } from 'antd';
+import {
+  KeyOutlined,
+  UserOutlined
+} from '@ant-design/icons';
 import axios from '../../utils/axios';
 import './login.scss';
 
@@ -64,7 +68,7 @@ function Login(props: any) {
             size="large"
             value={userName}
             placeholder="请输入用户名"
-            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           />
           <br />
           <br />
@@ -74,7 +78,7 @@ function Login(props: any) {
             size="large"
             value={password}
             placeholder="请输入密码"
-            prefix={<Icon type="key" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            prefix={<KeyOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           />
           <br />
           <br />

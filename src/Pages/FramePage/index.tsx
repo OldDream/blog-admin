@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import {
+  PieChartOutlined,
+  ClusterOutlined,
+  CommentOutlined
+} from '@ant-design/icons';
 import { Route } from 'react-router-dom';
 import AddArticle from '../AddArticle';
 import ArticleList from '../ArticleList';
@@ -69,14 +74,14 @@ function SiderDemo(props: any) {
           mode="inline"
         >
           <Menu.Item key="1">
-            <Icon type="pie-chart" />
+            <PieChartOutlined />
             <span>数据总览</span>
           </Menu.Item>
           <SubMenu
             key="sub1"
             title={
               <span>
-                <Icon type="user" />
+                <ClusterOutlined />
                 <span>文章管理</span>
               </span>
             }
@@ -85,7 +90,7 @@ function SiderDemo(props: any) {
             <Menu.Item key="/index/add">添加文章</Menu.Item>
           </SubMenu>
           <Menu.Item key="5">
-            <Icon type="file" />
+            <CommentOutlined />
             <span>留言管理</span>
           </Menu.Item>
         </Menu>
