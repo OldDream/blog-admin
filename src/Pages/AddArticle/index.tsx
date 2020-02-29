@@ -110,7 +110,7 @@ function AddArticle(props: any) {
   useEffect(() => {
     // 获取分类
     const getTypeInfo = () => {
-      axios.get('/admin/getTypeInfo').then(res => {
+      axios.get('/admin/getTypeInfo').then((res: any)  => {
         console.log(res.data);
         if (res.data.success === false) {
           sessionStorage.removeItem('openId');
@@ -124,7 +124,7 @@ function AddArticle(props: any) {
 
     // 获取文章并填充
     const getArticleById = (id: any) => {
-      axios.get('/admin/getArticleById/' + id).then(res => {
+      axios.get('/admin/getArticleById/' + id).then((res: any) => {
         console.log(res.data.data);
         const article = res.data.data
         if(res.data.success) {
@@ -146,7 +146,7 @@ function AddArticle(props: any) {
       getArticleById(parsed.id)
     }
 
-  }, []);
+  }, [props.location.search]);
 
   return (
     <div>

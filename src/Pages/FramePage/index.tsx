@@ -51,7 +51,7 @@ function SiderDemo(props: any) {
     console.log(props);
     setSelectedKeys([props.location.pathname]);
     openSub(props.location.pathname);
-  }, [props]);
+  }, [props.location.pathname]);
 
   const handleMenuClick = (key: string) => {
     console.log(key);
