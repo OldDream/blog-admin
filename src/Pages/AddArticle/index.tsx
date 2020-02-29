@@ -109,6 +109,7 @@ function AddArticle(props: any) {
 
   useEffect(() => {
     // 获取分类
+    console.log('useEffect in addArticle');
     const getTypeInfo = () => {
       axios.get('/admin/getTypeInfo').then((res: any)  => {
         console.log(res.data);
@@ -146,7 +147,7 @@ function AddArticle(props: any) {
       getArticleById(parsed.id)
     }
 
-  }, [props.location.search]);
+  }, [props.history,props.location.search]);
 
   return (
     <div>
