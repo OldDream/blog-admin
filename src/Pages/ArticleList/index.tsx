@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, List, Button, Modal, message } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Row, Col, List, Button, Modal, message, Switch } from 'antd';
+import {
+  ExclamationCircleOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
 import axios from '../../utils/axios';
 import './articleList.scss';
 const { confirm } = Modal;
 
+interface ArticleItem {
+  title: string;
+  typeName: string;
+  created_time: string;
+  view_count: number;
+  id: number;
+  isShow: number;
+}
+
 function ArticleList(props: any) {
-  interface ArticleItem {
-    title: string;
-    typeName: string;
-    created_time: string;
-    view_count: number;
-    id: number;
-  }
   const [list, setList] = useState<ArticleItem[]>([]);
 
   const getList = () => {
@@ -48,6 +54,21 @@ function ArticleList(props: any) {
     props.history.push('/index/add?id=' + id);
   };
 
+  const setIsShow = (checked: boolean, item: ArticleItem) => {
+    item.isShow = Number(checked);
+    const temp = {
+      id: item.id,
+      isShow: item.isShow
+    };
+    axios.post('/admin/addOrEditArticle', temp).then(res => {
+      console.log(res);
+      if (res.data.success) {
+        message.success('修改成功！');
+        setList([...list]);
+      }
+    });
+  };
+
   useEffect(() => {
     console.log('useEffect in ArticleList');
     getList();
@@ -60,12 +81,13 @@ function ArticleList(props: any) {
   return (
     <div>
       <List
+        className="list-div"
         header={
           <Row>
             <Col span={1}>
               <b>id</b>
             </Col>
-            <Col span={7}>
+            <Col span={6}>
               <b>标题</b>
             </Col>
             <Col span={3}>
@@ -74,10 +96,12 @@ function ArticleList(props: any) {
             <Col span={3}>
               <b>发布时间</b>
             </Col>
-            <Col span={3}>
+            <Col span={2}>
               <b>浏览量</b>
             </Col>
-
+            <Col span={3} className="inlineCenter">
+              <b>展示</b>
+            </Col>
             <Col span={4}>
               <b>操作</b>
             </Col>
@@ -86,13 +110,27 @@ function ArticleList(props: any) {
         bordered
         dataSource={list}
         renderItem={(item, index) => (
-          <List.Item>
+          <List.Item key={item.id}>
             <Row className="list-div">
               <Col span={1}>{item.id}</Col>
-              <Col span={7}>{item.title}</Col>
+              <Col span={6}>{item.title}</Col>
               <Col span={3}>{item.typeName}</Col>
               <Col span={3}>{item.created_time}</Col>
               <Col span={3}>{item.view_count}</Col>
+              <Col span={2}>
+                {/* {item.isShow === 1
+                  ? <CheckCircleOutlined className="greenIcon" />
+                  : <CloseCircleOutlined className="redIcon" />} */}
+                <Switch
+                  className="boxCenter"
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  onChange={checked => {
+                    setIsShow(checked, item);
+                  }}
+                  checked={Boolean(item.isShow)}
+                />
+              </Col>
               <Col span={4}>
                 <Button
                   type="primary"

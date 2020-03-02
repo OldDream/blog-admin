@@ -1,3 +1,18 @@
 .list-div {
+  // text-align: center;
   width: 100%;
+  .inlineCenter {
+    text-align: center;
+  }
+  .boxCenter {
+    margin: 0 auto;
+  }
+  .redIcon {
+    color: #eb2f96;
+    font-size: 28px;
+  }
+  .greenIcon {
+    color: #52c41a;
+    font-size: 28px;
+  }
 }

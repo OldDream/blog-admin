@@ -50,8 +50,18 @@ function AddArticle(props: any) {
     setSelectType(value);
   };
 
-  // 发布文章
-  const publishArticle = () => {
+  interface TempData {
+    type_id: number;
+    title: string;
+    introduction: string;
+    content: string;
+    created_time: number;
+    view_count?: number;
+    id?: number;
+    isShow: number;
+  }
+
+  const checkInput = () => {
     if (!selectedType) {
       message.error('请选择文章类型！');
       return false;
@@ -68,24 +78,22 @@ function AddArticle(props: any) {
       message.error('请输入文章内容！');
       return false;
     }
+  };
 
-    interface TempData {
-      type_id: number;
-      title: string;
-      introduction: string;
-      content: string;
-      created_time: number;
-      view_count?: number;
-      id?: number;
-    }
+  // 发布文章
+  const publishArticle = () => {
+    checkInput();
+
     let temp: TempData = {
+      isShow: 1,
       type_id: (selectedType as unknown) as number,
       title: articleTitle,
       introduction: description,
       content: articleContent,
       created_time: showDate.unix()
     };
-    if (articleId === 0) { // 新增文章
+    if (articleId === 0) {
+      // 新增文章
       temp.view_count = 0;
       axios.post('/admin/addOrEditArticle', temp).then(res => {
         console.log(res);
@@ -94,7 +102,8 @@ function AddArticle(props: any) {
           setArticleId(res.data.data.id);
         }
       });
-    } else { // 编辑文章
+    } else {
+      // 编辑文章
       temp.id = articleId;
       axios.post('/admin/addOrEditArticle', temp).then(res => {
         console.log(res);
@@ -106,12 +115,44 @@ function AddArticle(props: any) {
   };
 
   // 保存草稿
+  const saveDraft = () => {
+    checkInput();
+
+    let temp: TempData = {
+      isShow: 0,
+      type_id: (selectedType as unknown) as number,
+      title: articleTitle,
+      introduction: description,
+      content: articleContent,
+      created_time: showDate.unix()
+    };
+    if (articleId === 0) {
+      // 新增文章
+      temp.view_count = 0;
+      axios.post('/admin/addOrEditArticle', temp).then(res => {
+        console.log(res);
+        if (res.data.success) {
+          message.success('添加成功！');
+          setArticleId(res.data.data.id);
+        }
+      });
+    } else {
+      // 编辑文章
+      temp.id = articleId;
+      axios.post('/admin/addOrEditArticle', temp).then(res => {
+        console.log(res);
+        if (res.data.success) {
+          message.success('编辑成功！');
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     // 获取分类
     console.log('useEffect in addArticle');
     const getTypeInfo = () => {
-      axios.get('/admin/getTypeInfo').then((res: any)  => {
+      axios.get('/admin/getTypeInfo').then((res: any) => {
         console.log(res.data);
         if (res.data.success === false) {
           sessionStorage.removeItem('openId');
@@ -127,27 +168,26 @@ function AddArticle(props: any) {
     const getArticleById = (id: any) => {
       axios.get('/admin/getArticleById/' + id).then((res: any) => {
         console.log(res.data.data);
-        const article = res.data.data
-        if(res.data.success) {
-          setArticleId(article.id)
-          setArticleTitle(article.title)
-          setArticleContent(article.content)
-          setDescription(article.introduction)
-          setSelectType(article.type_id)
-          setShowDate(moment.unix(article.created_time))
-          changeContent({target:{value:article.content}})
-          changeDescription({target:{value:article.introduction}})
+        const article = res.data.data;
+        if (res.data.success) {
+          setArticleId(article.id);
+          setArticleTitle(article.title);
+          setArticleContent(article.content);
+          setDescription(article.introduction);
+          setSelectType(article.type_id);
+          setShowDate(moment.unix(article.created_time));
+          changeContent({ target: { value: article.content } });
+          changeDescription({ target: { value: article.introduction } });
         }
-      })
-    }
+      });
+    };
 
     // 编辑文章
     if (props.location.search) {
       const parsed = queryString.parse(props.location.search);
-      getArticleById(parsed.id)
+      getArticleById(parsed.id);
     }
-
-  }, [props.history,props.location.search]);
+  }, [props.history, props.location.search]);
 
   return (
     <div>
@@ -208,7 +248,10 @@ function AddArticle(props: any) {
           <Row>
             <Col span={24}>
               &nbsp;
-              <Button size="large">保存草稿</Button>&nbsp;
+              <Button size="large" onClick={saveDraft}>
+                保存草稿
+              </Button>
+              &nbsp;
               <Button size="large" type="primary" onClick={publishArticle}>
                 发布文章
               </Button>
