@@ -1,7 +1,9 @@
 import axios from 'axios'
+console.log(process.env.NODE_ENV);
+const isDev = process.env.NODE_ENV ==='development'
 
 const instance = axios.create({
-  baseURL: 'http://127.0.0.1:7001',
+  baseURL: isDev?'http://localhost:3000/': 'http://106.15.67.223:7001/',
   timeout: 3000,
   withCredentials: true
 })
