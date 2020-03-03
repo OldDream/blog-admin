@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, List, Button, Modal, message, Switch } from 'antd';
-import {
-  ExclamationCircleOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined
-} from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from '../../utils/axios';
 import './articleList.scss';
 const { confirm } = Modal;
