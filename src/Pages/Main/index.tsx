@@ -6,7 +6,7 @@ import './style.scss';
 
 export default function Main() {
   return (
-    <Router>
+    <Router basename="/blog-admin">
       <Route path="/" exact component={Login} />
       <Route path="/index/" component={FramePage} />
     </Router>
