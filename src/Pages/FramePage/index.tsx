@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import React, { useState, useEffect } from 'react';
+import { Layout, Menu, Breadcrumb } from 'antd';
 import {
   PieChartOutlined,
   ClusterOutlined,
   CommentOutlined
-} from "@ant-design/icons";
-import { Route } from "react-router-dom";
-import AddArticle from "../AddArticle";
-import ArticleList from "../ArticleList";
-import "./style.scss";
+} from '@ant-design/icons';
+import { Route, Switch } from 'react-router-dom';
+import AddArticle from '../AddArticle';
+import ArticleList from '../ArticleList';
+import './style.scss';
 
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -30,16 +30,16 @@ function SiderDemo(props: any) {
   // 初始化页面时展开二级菜单
   const openSub = (key: string) => {
     function findSub(key: string): string {
-      console.log("findSub");
+      console.log('findSub');
       switch (key) {
-        case "/index":
-          return "sub1";
-        case "/index/list":
-          return "sub1";
-        case "/index/add":
-          return "sub1";
+        case '/index':
+          return 'sub1';
+        case '/index/list':
+          return 'sub1';
+        case '/index/add':
+          return 'sub1';
         default:
-          const index = key.lastIndexOf("/");
+          const index = key.lastIndexOf('/');
           const newKey = key.slice(0, index);
           return findSub(newKey);
       }
@@ -52,7 +52,7 @@ function SiderDemo(props: any) {
   };
 
   useEffect(() => {
-    console.log("useEffect in frame-page");
+    console.log('useEffect in frame-page');
     console.log(props);
     setSelectedKeys([props.location.pathname]);
     openSub(props.location.pathname);
@@ -60,10 +60,10 @@ function SiderDemo(props: any) {
     const setBreadCrumb = () => {
       switch (props.location.pathname) {
         case '/index/list':
-          setBreadCrumbArray([{name:'文章管理'},{name:'文章列表'}])
+          setBreadCrumbArray([{ name: '文章管理' }, { name: '文章列表' }]);
           break;
         case '/index/add':
-          setBreadCrumbArray([{name:'文章管理'},{name:'添加文章'}])
+          setBreadCrumbArray([{ name: '文章管理' }, { name: '添加文章' }]);
           break;
         default:
           break;
@@ -76,10 +76,10 @@ function SiderDemo(props: any) {
     console.log(key);
     setSelectedKeys([key]);
     switch (key) {
-      case "/index/list":
+      case '/index/list':
         props.history.push(key);
         break;
-      case "/index/add":
+      case '/index/add':
         props.history.push(key);
         break;
       default:
@@ -88,7 +88,7 @@ function SiderDemo(props: any) {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu
@@ -126,20 +126,23 @@ function SiderDemo(props: any) {
         </Menu>
       </Sider>
       <Layout>
-        <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            {breadCrumbArray.map((item,index) => {
+        <Content style={{ margin: '0 16px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            {breadCrumbArray.map((item, index) => {
               return <Breadcrumb.Item key={index}>{item.name}</Breadcrumb.Item>;
             })}
           </Breadcrumb>
-          <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-            <Route path="/index" exact component={AddArticle} />
-            <Route path="/index/add" exact component={AddArticle} />
-            <Route path="/index/add/:id" exact component={AddArticle} />
-            <Route path="/index/list" component={ArticleList} />
+          <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <Switch>
+              <Route path="/index" exact component={AddArticle} />
+              <Route path="/index/add" exact component={AddArticle} />
+              <Route path="/index/add/:id" exact component={AddArticle} />
+              <Route path="/index/list" component={ArticleList} />
+              <Route component={AddArticle} />
+            </Switch>
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>React.js + Ant Design</Footer>
+        <Footer style={{ textAlign: 'center' }}>React.js + Ant Design</Footer>
       </Layout>
     </Layout>
   );

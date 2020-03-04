@@ -1,14 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from '../Login';
 import FramePage from '../FramePage';
+import NotMatch from '../404';
 import './style.scss';
 
 export default function Main() {
   return (
-    <Router basename="/blog-admin">
-      <Route path="/" exact component={Login} />
-      <Route path="/index/" component={FramePage} />
-    </Router>
+    <BrowserRouter basename="/blog-admin">
+      <Switch>
+        <Route path="/" exact component={Login} />
+        <Route path="/index/" component={FramePage} />
+        <Route component={NotMatch} />
+      </Switch>
+    </BrowserRouter>
   );
 }
