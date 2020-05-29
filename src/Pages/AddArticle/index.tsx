@@ -29,7 +29,7 @@ function AddArticle(props: any) {
     // tables: true,
     breaks: false,
     smartLists: true,
-    smartypants: false
+    smartypants: false,
   });
 
   // 处理文章markdown输入
@@ -90,12 +90,12 @@ function AddArticle(props: any) {
       title: articleTitle,
       introduction: description,
       content: articleContent,
-      created_time: showDate.unix()
+      created_time: showDate.unix(),
     };
     if (articleId === 0) {
       // 新增文章
       temp.view_count = 0;
-      axios.post('/admin/addOrEditArticle', temp).then(res => {
+      axios.post('/admin/addOrEditArticle', temp).then((res) => {
         console.log(res);
         if (res.data.success) {
           message.success('添加成功！');
@@ -105,7 +105,7 @@ function AddArticle(props: any) {
     } else {
       // 编辑文章
       temp.id = articleId;
-      axios.post('/admin/addOrEditArticle', temp).then(res => {
+      axios.post('/admin/addOrEditArticle', temp).then((res) => {
         console.log(res);
         if (res.data.success) {
           message.success('编辑成功！');
@@ -124,12 +124,12 @@ function AddArticle(props: any) {
       title: articleTitle,
       introduction: description,
       content: articleContent,
-      created_time: showDate.unix()
+      created_time: showDate.unix(),
     };
     if (articleId === 0) {
       // 新增文章
       temp.view_count = 0;
-      axios.post('/admin/addOrEditArticle', temp).then(res => {
+      axios.post('/admin/addOrEditArticle', temp).then((res) => {
         console.log(res);
         if (res.data.success) {
           message.success('添加成功！');
@@ -139,7 +139,7 @@ function AddArticle(props: any) {
     } else {
       // 编辑文章
       temp.id = articleId;
-      axios.post('/admin/addOrEditArticle', temp).then(res => {
+      axios.post('/admin/addOrEditArticle', temp).then((res) => {
         console.log(res);
         if (res.data.success) {
           message.success('编辑成功！');
@@ -148,6 +148,7 @@ function AddArticle(props: any) {
     }
   };
 
+  // useEffect 做了什么？ 通过使用这个 Hook，你可以告诉 React 组件需要在渲染后执行某些操作。React 会保存你传递的函数（我们将它称之为 “effect”），并且在执行 DOM 更新之后调用它。
   useEffect(() => {
     // 获取分类
     console.log('useEffect in addArticle');
@@ -200,7 +201,7 @@ function AddArticle(props: any) {
                 placeholder="博客标题"
                 size="large"
                 value={articleTitle}
-                onChange={e => {
+                onChange={(e) => {
                   setArticleTitle(e.target.value);
                 }}
               />

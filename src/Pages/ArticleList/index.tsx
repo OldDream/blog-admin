@@ -18,7 +18,7 @@ function ArticleList(props: any) {
   const [list, setList] = useState<ArticleItem[]>([]);
 
   const getList = () => {
-    axios.get('/admin/getArticleList').then(res => {
+    axios.get('/admin/getArticleList').then((res) => {
       setList(res.data.data);
     });
   };
@@ -30,7 +30,7 @@ function ArticleList(props: any) {
       icon: <ExclamationCircleOutlined />,
       onOk() {
         console.log('OK');
-        axios.delete('/admin/deleteArticle/' + id).then(res => {
+        axios.delete('/admin/deleteArticle/' + id).then((res) => {
           console.log(res);
           if (res.data.success) {
             message.success('删除成功！');
@@ -42,7 +42,7 @@ function ArticleList(props: any) {
       },
       onCancel() {
         console.log('Cancel');
-      }
+      },
     });
   };
 
@@ -54,9 +54,9 @@ function ArticleList(props: any) {
     item.isShow = Number(checked);
     const temp = {
       id: item.id,
-      isShow: item.isShow
+      isShow: item.isShow,
     };
-    axios.post('/admin/addOrEditArticle', temp).then(res => {
+    axios.post('/admin/addOrEditArticle', temp).then((res) => {
       console.log(res);
       if (res.data.success) {
         message.success('修改成功！');
@@ -121,7 +121,7 @@ function ArticleList(props: any) {
                   className="boxCenter"
                   checkedChildren="开"
                   unCheckedChildren="关"
-                  onChange={checked => {
+                  onChange={(checked) => {
                     setIsShow(checked, item);
                   }}
                   checked={Boolean(item.isShow)}
@@ -138,7 +138,8 @@ function ArticleList(props: any) {
                 </Button>
                 &nbsp;
                 <Button
-                  type="danger"
+                  type="primary"
+                  danger
                   onClick={() => {
                     deleteArticle(item.id, index);
                   }}
