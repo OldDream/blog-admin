@@ -3,7 +3,7 @@ console.log(process.env.NODE_ENV);
 const isDev = process.env.NODE_ENV ==='development'
 
 const instance = axios.create({
-  baseURL: isDev?'http://localhost:3000/': 'http://106.15.67.223/api',
+  baseURL: isDev?'': 'http://106.15.67.223/api',
   timeout: 3000,
   withCredentials: true
 })
