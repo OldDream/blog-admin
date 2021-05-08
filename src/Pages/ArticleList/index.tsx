@@ -27,6 +27,8 @@ function ArticleList(props: any) {
     console.log(index);
     confirm({
       title: '确定删除本文章?',
+      cancelText: '取消?',
+      okText: '确定',
       icon: <ExclamationCircleOutlined />,
       onOk() {
         console.log('OK');

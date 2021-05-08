@@ -11,6 +11,12 @@ function Login(props: any) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  // const [isShow, setIsShow] = useState(false);
+  let show = false
+  function changShow() {
+    show = !show
+    console.log(show);
+  }
 
   function handleUsernameInput(e: any) {
     setUserName(e.target.value);
@@ -57,6 +63,7 @@ function Login(props: any) {
   return (
     <div className="login-div">
       <Spin tip="Loading..." spinning={isLoading} wrapperClassName="spin-div">
+        {show? <div onClick={changShow}>show!!!!</div>:<div onClick={changShow}>not show!!!</div>}
         <Card
           title="HYN's Blog Admin Page"
           bordered={true}

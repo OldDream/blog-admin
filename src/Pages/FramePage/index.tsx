@@ -3,11 +3,12 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import {
   PieChartOutlined,
   ClusterOutlined,
-  CommentOutlined
+  CommentOutlined,
 } from '@ant-design/icons';
 import { Route, Switch } from 'react-router-dom';
 import AddArticle from '../AddArticle';
 import ArticleList from '../ArticleList';
+import Test from '../404';
 import './style.scss';
 
 const { Content, Footer, Sider } = Layout;
@@ -138,6 +139,7 @@ function SiderDemo(props: any) {
               <Route path="/index/add" exact component={AddArticle} />
               <Route path="/index/add/:id" exact component={AddArticle} />
               <Route path="/index/list" component={ArticleList} />
+              <Route path="/index" component={Test} />
               <Route component={AddArticle} />
             </Switch>
           </div>
